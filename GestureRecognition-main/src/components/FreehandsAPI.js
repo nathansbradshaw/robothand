@@ -44,11 +44,11 @@ let pinky =  '';
    
    return(
       <div>
-        <p id='thumb'>thumb: {thumb}</p>
-        <p id='index'>index: {index}</p>
-        <p id='middle'>middle: {middle}</p>
-        <p id='ring'>ring: {ring}</p>
-        <p id='pinky'>pinky: {pinky}</p>
+        <p id='thumb'>thumb: </p>
+        <p id='index'>index: </p>
+        <p id='middle'>middle: </p>
+        <p id='ring'>ring: </p>
+        <p id='pinky'>pinky: </p>
 
       </div>
    )
