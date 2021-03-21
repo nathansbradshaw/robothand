@@ -62,7 +62,7 @@ class Freehand_class extends React.Component {
       return (
          <div>
             <button onClick={this.callVideoFeed.bind(this)}>Start Video</button>
-            <button onClick={this.toggleState.bind(this)}>Console Log Data </button>
+            {/* <button onClick={this.toggleState.bind(this)}>Console Log Data </button> */}
 
          </div>
       )
