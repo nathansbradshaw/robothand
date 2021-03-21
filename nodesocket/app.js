@@ -3,7 +3,7 @@ const http = require("http");
 const socketIo = require("socket.io");
 const SerialPort = require('serialport');
 const e = require("express");
-const SERIALPORT = 'com20'
+const SERIALPORT = 'COM9'
 const serialport = new SerialPort(SERIALPORT, {
   baudRate: 57600
 })
