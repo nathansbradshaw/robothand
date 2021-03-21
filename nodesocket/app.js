@@ -4,9 +4,14 @@ const socketIo = require("socket.io");
 const SerialPort = require('serialport');
 const e = require("express");
 const SERIALPORT = 'COM9'
+const BAUDRATE = 115200
 const serialport = new SerialPort(SERIALPORT, {
-  baudRate: 57600
+  baudRate: BAUDRATE
 })
+
+serialport.on("open", () => {
+  console.log('serial port open on ' + SERIALPORT + ' At baudrate: '+ BAUDRATE);
+});
 //Port from environment variable or default - 4001
 const port = process.env.PORT || 8000;
 
