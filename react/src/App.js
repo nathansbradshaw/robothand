@@ -1,66 +1,45 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import FreehandsAPI from "./components/FreehandsAPI"
-// Inside your app
-// import Handsfree from 'Freehands'
-// import FreehandsAPI from "./components/FreehandsAPI";
-// Let's use handtracking and enable the plugins tagged with "browser"
-// const handsfree = new Handsfree({ showDebug: true, hands: true })
-
-
+import Freehand_class from "./components/Freehand_class"
+import socketIOClient from "socket.io-client";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { apiResponse: "" };
-    // handsfree.enablePlugins('browser')
-    // handsfree.start()
-    // // From inside a plugin
-    // handsfree.use('logger', data => {
-    //   if (!data.hands) return
-
-    //   // Show a log whenever the left hand is visible
-    //   if (data.hands.landmarksVisible[0]) {
-    //     console.log(data.hands.gesture[0].pose)
-    //   }
-    // })
-    // handsfree.useGesture({
-    //   "name": "untitled",
-    //   "algorithm": "fingerpose",
-    //   "models": "hands",
-    //   "confidence": 7.5,
-    //   "description": []
-    // })
-
-
-  }
-
-  callAPI() {
-    fetch("http://localhost:9000/testAPI")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }))
-      .catch(err => err);
+  state = { message: "" }
+callbackFunction = (childData) => {
+      this.setState({message: childData})
+}
+  constructor() {
+    super();
+    this.state = {
+      response: 0,
+      endpoint: "http://127.0.0.1:8000"
+    };
   }
 
   componentDidMount() {
-    this.callAPI();
+    const { endpoint } = this.state;
+    //Very simply connect to the socket
+    console.log('Connect to server')
+    const socket = socketIOClient(endpoint);
+    //Listen for data on the "outgoing data" namespace and supply a callback for what to do when we get one. In this case, we set a state variable
+    socket.on("outgoing data", data => this.setState({ response: data.num }));
   }
 
   render() {
+    const { response } = this.state;
+    console.log(this.state.message);
+
     return (
-      <div className="App">
+      <div style={{ textAlign: "center" }}>
         <link
-    rel="stylesheet"
-    href="https://unpkg.com/handsfree@8.1.1/build/lib/assets/handsfree.css" />
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header> */}
-        <p className="App-intro">{this.state.apiResponse}</p>
-        <FreehandsAPI/>
+          rel="stylesheet"
+          href="https://unpkg.com/handsfree@8.1.1/build/lib/assets/handsfree.css" />
+        {/* <FreehandsAPI  parentCallback = {this.callbackFunction}/> */}
+        <Freehand_class  parentCallback = {this.callbackFunction}/>
+          <p> {this.state.message} </p>
       </div>
-    );
+    )
   }
 }
 
