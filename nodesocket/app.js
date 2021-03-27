@@ -28,6 +28,8 @@ const io = socketIo(server, {
   }
 });
 
+let command = 'NODATA';
+
 //Setting up a socket with the namespace "connection" for new sockets
 io.on("connection", socket => {
   console.log("-----------------------------New client connected");
@@ -40,10 +42,9 @@ io.on("connection", socket => {
 
     socket.on('hand data', (data) => {
       let cmd = dataToString(data)
+      command = cmd;
       console.log(cmd)
-      if (serialport) {
-        serialport.write(cmd)
-      }
+      
     })
 
 
@@ -73,4 +74,14 @@ const dataToString = (data) => {
 parser.on('data', data => {
   console.log('got word from arduino:', data);
 });
+
+setInterval(function(){ 
+  if (serialport) {
+    serialport.write(command)
+    console.log(command)
+
+  }
+},1000) //logs hi every second
+
+
 server.listen(port, () => console.log(`Listening on port ${port}`));
