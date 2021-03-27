@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component, } from 'react'
 import "./App.css";
-// import FreehandsAPI from "./components/FreehandsAPI"
 import Freehand_class from "./components/Freehand_class"
 import socketIOClient from "socket.io-client";
+import { socket } from './context/socket';
 
 class App extends Component {
   state = { message: "" }
@@ -12,13 +12,13 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: "http://127.0.0.1:8000",
     };
-    this.socket = socketIOClient(this.state.endpoint);
+    this.counter = 0;
 
   }
+  
   sendData = (data) => {
-    this.socket.emit('hand data', (data));
+    socket.emit('hand data', (data));
   
   }
 
@@ -27,18 +27,30 @@ class App extends Component {
     //Very simply connect to the socket
     console.log('Connect to server')
     // const socket = socketIOClient(endpoint);
-    // setInterval(this.sendData(), 1000)
+    const interval = setInterval(this.sendData(this.state.message), 1000)
     // //Listen for data on the "outgoing data" namespace and supply a callback for what to do when we get one. In this case, we set a state variable
     // // socket.on("outgoing data", data => this.setState({ response: data.num }));
     // socket.emit('hand data', ('Heeloo'));
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
 
   render() {
     const { response } = this.state;
     console.log(this.state.message);
-    this.sendData(this.state.message)
+    // const interval = setInterval(this.sendData(this.state.message), 10000)
+    clearInterval(this.interval);
+    if (this.counter > 30) {
+      this.sendData(this.state.message)
+      this.counter = 0;
+      console.log('SENDING DATA')
+    }
+    this.counter++;
+    console.log(this.counter)
+
 
     return (
       <div style={{ textAlign: "center" }}>
