@@ -52,18 +52,18 @@ void setup() {
     // Create task that reads the serial data
     xTaskCreate(TaskSerial,// Task function
                 "Read Serial",// Task name
-                64,// Stack size
+                128,// Stack size
                 NULL,
                 2,// Priority
                 NULL);
 
-    // Create task that publish data in the queue if it was created.
-    xTaskCreate(TaskThumbFinger, // Task function
-                "thumb Finger",// Task name
-                64,// Stack size
-                NULL,
-                1,// Priority
-                NULL);
+    // // Create task that publish data in the queue if it was created.
+    // xTaskCreate(TaskThumbFinger, // Task function
+    //             "thumb Finger",// Task name
+    //             64,// Stack size
+    //             NULL,
+    //             1,// Priority
+    //             NULL);
 
     // Create task that publish data in the queue if it was created.
     xTaskCreate(TaskIndexFinger, // Task function
@@ -77,7 +77,7 @@ void setup() {
     // Create task that publish data in the queue if it was created.
     xTaskCreate(TaskMiddleFinger, // Task function
                 "middle Finger",// Task name
-                64,// Stack size
+                128,// Stack size
                 NULL,
                 1,// Priority
                 NULL);
@@ -85,17 +85,17 @@ void setup() {
     // Create task that publish data in the queue if it was created.
     xTaskCreate(TaskRingFinger, // Task function
                 "ring Finger",// Task name
-                64,// Stack size
+                128,// Stack size
                 NULL,
                 1,// Priority
                 NULL);
-    // Create task that publish data in the queue if it was created.
-    xTaskCreate(TaskPinkyFinger, // Task function
-                "pinky Finger",// Task name
-                64,// Stack size
-                NULL,
-                1,// Priority
-                NULL);
+    // // Create task that publish data in the queue if it was created.
+    // xTaskCreate(TaskPinkyFinger, // Task function
+    //             "pinky Finger",// Task name
+    //             64,// Stack size
+    //             NULL,
+    //             1,// Priority
+    //             NULL);
 
   }
 }

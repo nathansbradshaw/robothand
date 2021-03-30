@@ -3,24 +3,25 @@
 Servo fingerServos[5];  // create servo object to control a servo
 void moveServo(int);
 int FingerPositions[5] = {0, 0, 0, 0, 0};
+//int servoAngles[5] = {
 String serial_cmd = "";
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  Serial.println("This work?");
-  delay(1000);
+  Serial.println("Starting Program");
+  delay(20);
+
   fingerServos[0].attach(7);  // attaches the servo on pin 9 to the servo object
   fingerServos[1].attach(8);  // attaches the servo on pin 9 to the servo object
   fingerServos[2].attach(9);  // attaches the servo on pin 9 to the servo object
   fingerServos[3].attach(10);  // attaches the servo on pin 9 to the servo object
   fingerServos[4].attach(11);  // attaches the servo on pin 9 to the servo object
+  Serial.println("Leaving Setup");
 }
 
 void loop() {
+  Serial.println("Ready-to-receive");
   if (Serial) {
     serial_cmd = Serial.readString();
     //Get end of serial
@@ -43,20 +44,21 @@ void loop() {
       Serial.println(FingerPositions[4]);
       serial_cmd = "NODATA";
     }
+    moveServo(0);
+    moveServo(1);
+    moveServo(2);
+    moveServo(3);
+    moveServo(4);
   }
-  moveServo(0);
-  moveServo(1);
-  moveServo(2);
-  moveServo(3);
-  moveServo(4);
+delay(20);
 }
 
 void moveServo(int servoNumber) {
   if (FingerPositions[servoNumber] == 1) {
     fingerServos[servoNumber].write(90);
   } else if (FingerPositions[servoNumber] == 2) {
-    fingerServos[servoNumber].write(0);
+    fingerServos[servoNumber].write(45);
   } else {
-    fingerServos[servoNumber].write(180);
+    fingerServos[servoNumber].write(135);
   }
 }

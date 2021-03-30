@@ -43,7 +43,7 @@ class App extends Component {
     console.log(this.state.message);
     // const interval = setInterval(this.sendData(this.state.message), 10000)
     clearInterval(this.interval);
-    if (this.counter > 30) {
+    if (this.counter > 40) {
       this.sendData(this.state.message)
       this.counter = 0;
       console.log('SENDING DATA')

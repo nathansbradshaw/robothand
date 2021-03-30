@@ -4,7 +4,7 @@ const socketIo = require("socket.io");
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline')
 const e = require("express");
-const SERIALPORT = 'COM6'
+const SERIALPORT = 'COM12'
 const BAUDRATE = 115200
 const serialport = new SerialPort(SERIALPORT, {
   baudRate: BAUDRATE
@@ -44,6 +44,7 @@ io.on("connection", socket => {
       let cmd = dataToString(data)
       command = cmd;
       console.log(cmd)
+      return;
       
     })
 
@@ -73,15 +74,19 @@ const dataToString = (data) => {
 
 parser.on('data', data => {
   console.log('got word from arduino:', data);
+  if(data.trim() === 'Ready-to-receive'){
+    console.log('Sending command: ' + command)
+    serialport.write(command)
+  }
 });
 
-setInterval(function(){ 
-  if (serialport) {
-    serialport.write(command)
-    console.log(command)
+// setInterval(function(){ 
+//   if (serialport) {
+//     serialport.write(command)
+//     console.log(command)
 
-  }
-},1000) //logs hi every second
+//   }
+// },2000) //logs hi every second
 
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
