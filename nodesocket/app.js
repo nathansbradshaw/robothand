@@ -4,7 +4,7 @@ const socketIo = require("socket.io");
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline')
 const e = require("express");
-const SERIALPORT = 'COM12'
+const SERIALPORT = 'COM6'
 const BAUDRATE = 115200
 const serialport = new SerialPort(SERIALPORT, {
   baudRate: BAUDRATE
