@@ -31,13 +31,13 @@ class Freehand_class extends React.Component {
          if (!data.hands) return
          // console.log(data);
          // Show a log whenever the left hand is visible
-         if (data.hands.landmarksVisible[0]) {
+         if (data.hands.landmarksVisible[1]) {
             if (typeof (data.hands.gesture) !== 'undefined') {
-               thumb = data.hands.gesture[0].pose[0][1];
-               index = data.hands.gesture[0].pose[1][1];
-               middle = data.hands.gesture[0].pose[2][1];
-               ring = data.hands.gesture[0].pose[3][1];
-               pinky = data.hands.gesture[0].pose[4][1];
+               thumb = data.hands.gesture[1].pose[0][1];
+               index = data.hands.gesture[1].pose[1][1];
+               middle = data.hands.gesture[1].pose[2][1];
+               ring = data.hands.gesture[1].pose[3][1];
+               pinky = data.hands.gesture[1].pose[4][1];
                this.props.parentCallback([thumb,index,middle,ring,pinky])
 
                // console.log(thumb)
