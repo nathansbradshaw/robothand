@@ -3,7 +3,9 @@
 Servo fingerServos[5];  // create servo object to control a servo
 void moveServo(int);
 int FingerPositions[5] = {0, 0, 0, 0, 0};
-//int servoAngles[5] = {
+int servoAnglesLow[5] = {45, 65, 45, 45, 90};
+int servoAnglesHigh[5] = {135, 120, 135, 150, 15};
+int servoAnglesMiddle[5] = {90, 90, 90, 90, 90};
 String serial_cmd = "";
 
 void setup() {
@@ -12,11 +14,11 @@ void setup() {
   Serial.println("Starting Program");
   delay(20);
 
-  fingerServos[0].attach(7);  // attaches the servo on pin 9 to the servo object
+  fingerServos[0].attach(7);  // attaches the servo on pin 9 to the servo object (thumb)
   fingerServos[1].attach(8);  // attaches the servo on pin 9 to the servo object
   fingerServos[2].attach(9);  // attaches the servo on pin 9 to the servo object
-  fingerServos[3].attach(10);  // attaches the servo on pin 9 to the servo object
-  fingerServos[4].attach(11);  // attaches the servo on pin 9 to the servo object
+  fingerServos[3].attach(10);  // attaches the servo on pin 9 to the servo object (ring)
+  fingerServos[4].attach(11);  // attaches the servo on pin 9 to the servo object (pinky)
   Serial.println("Leaving Setup");
 }
 
@@ -44,21 +46,22 @@ void loop() {
       Serial.println(FingerPositions[4]);
       serial_cmd = "NODATA";
     }
-    moveServo(0);
-    moveServo(1);
-    moveServo(2);
-    moveServo(3);
-    moveServo(4);
+    moveServo(0); // thumb
+    moveServo(1); // Index
+    moveServo(2); //Middle
+    moveServo(4); // Pinky
+    moveServo(3); // Ring
+    
   }
 delay(20);
 }
 
 void moveServo(int servoNumber) {
   if (FingerPositions[servoNumber] == 1) {
-    fingerServos[servoNumber].write(90);
+    fingerServos[servoNumber].write(servoAnglesMiddle[servoNumber]);
   } else if (FingerPositions[servoNumber] == 2) {
-    fingerServos[servoNumber].write(45);
+    fingerServos[servoNumber].write(servoAnglesLow[servoNumber]);
   } else {
-    fingerServos[servoNumber].write(135);
+    fingerServos[servoNumber].write(servoAnglesHigh[servoNumber]);
   }
 }
